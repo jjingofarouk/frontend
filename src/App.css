@@ -24,29 +24,15 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.6;
-  padding: 20px;
 }
 
 /* App Container */
 .App {
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
   padding: 20px;
-  text-align: center;
-}
-
-/* Header Styling */
-.App h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: var(--primary-color);
-}
-
-/* Paragraph Styling */
-.App p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  color: var(--text-color);
 }
 
 /* Symptom Component Container */
@@ -55,51 +41,19 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
   max-width: 800px;
+  width: 100%;
   border: 2px solid var(--secondary-color);
-}
-
-/* Button Styling (Example) */
-.button {
-  background-color: var(--accent-color);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.button:hover {
-  background-color: var(--primary-color);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .App h1 {
-    font-size: 2rem;
-  }
-
-  .App p {
-    font-size: 1rem;
-  }
-
   .symptom-container {
     padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
-  .App h1 {
-    font-size: 1.8rem;
-  }
-
-  .App p {
-    font-size: 0.9rem;
-  }
-
   .symptom-container {
     padding: 10px;
   }
