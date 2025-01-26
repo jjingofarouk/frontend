@@ -1,10 +1,10 @@
 import React from 'react';
-import Symptom from './components/symptomchecker/Symptom'; // Import the SymptomChecker component
+import Symptom from './components/symptomchecker/Symptom';
 
 function App() {
   return (
-    <div className="App">
-      <Symptom /> {/* Render only the SymptomChecker component */}
+    <div style={{ margin: '0', padding: '0', width: '100%', height: '100%' }}>
+      <Symptom />
     </div>
   );
 }
