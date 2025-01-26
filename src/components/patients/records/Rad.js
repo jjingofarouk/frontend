@@ -4,6 +4,7 @@ import { Button, TextField, Select, MenuItem, Card, CardContent, CardActions, Ty
 import { CloudUpload, CloudDownload, Edit, Delete, Visibility, Share, Compare, Timeline, LocalHospital, Description, Alarm } from '@mui/icons-material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Alert, AlertTitle } from '@mui/material';
+import './Labs.css';
 
 // GraphQL Queries & Mutations (expanded)
 const GET_RAD_RESULTS = gql`
@@ -216,7 +217,7 @@ const Rad = () => {
     })).sort((a, b) => a.date - b.date);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={300} color="#004C54">
         <LineChart data={timelineData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" type="category" tickFormatter={(date) => new Date(date).toLocaleDateString()} />
@@ -242,7 +243,7 @@ const Rad = () => {
 
   return (
     <div className="advanced-medical-imaging-system">
-      <Typography variant="h4" gutterBottom>Advanced Medical Imaging Management System</Typography>
+      <Typography variant="h4" gutterBottom>Medical Imaging Manager</Typography>
 
       {/* Upload New Imaging Result */}
       <Card style={{ marginBottom: '20px' }}>

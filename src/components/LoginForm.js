@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Card, Spinner } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = ({ onLogin }) => {

@@ -8,7 +8,7 @@ import FamilyHistory from './FamilyHistory';
 import SocialHistory from './SocialHistory';
 import ReviewOfSystems from './ReviewOfSystems';
 import ExaminationFindings from './ExaminationFindings';
-import { Select } from '../ui/select';
+import { Select } from '../../ui/select';
 
 const History = () => {
   const [patientData, setPatientData] = useState({

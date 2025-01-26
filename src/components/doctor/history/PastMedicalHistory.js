@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import TextArea  from './ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import TextArea  from '../../ui/textarea';
 import { chronicConditionsOptions } from './ChronicConditions'; // Import your chronic conditions options
 import { specificIllnessesOptions }  from './SpecificIllnesses'; // Add the path to your specific illnesses options
 import { medicationOptions } from './MedicationOptions'; // Adjust the path as necessary
@@ -63,26 +63,8 @@ const PastMedicalHistory = ({ pastMedicalHistory, handleInputChange, handleArray
           onChange={(e) => handleInputChange('pastMedicalHistory', 'hospitalizations', e.target.value)}
         />
 
-        <TextArea
-          placeholder="List any past surgeries (dates and types)"
-          value={pastMedicalHistory.surgeries || ''}
-          onChange={(e) => handleInputChange('pastMedicalHistory', 'surgeries', e.target.value)}
-        />
+ 
 
-        <label htmlFor="specificIllnesses">Select Specific Illnesses:</label>
-        <select 
-          id="specificIllnesses" 
-          multiple 
-          value={specificIllnesses} 
-          onChange={handleSpecificIllnessesChange} 
-          style={{ height: '100px' }} 
-        >
-          {(specificIllnessesOptions || []).map((illness, index) => ( // Use a fallback to empty array
-            <option key={index} value={illness}>
-              {illness}
-            </option>
-          ))}
-        </select>
 
         <TextArea
           placeholder="List any allergies (medications, food, environmental) and reactions"

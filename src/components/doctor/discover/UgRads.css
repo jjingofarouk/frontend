@@ -21,10 +21,11 @@
   }
   
   .cases-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+
     justify-content: space-between;
-    gap: 20px;
   }
   
   .case-card {
@@ -68,25 +69,46 @@
     color: #D32F2D;
   }
   
+  
+  /* Pagination controls */
   .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    gap: 8px;
+    margin-top: 16px;
   }
-  
-  .page-item {
-    margin: 0 5px;
-  }
-  
-  .page-link {
+
+  .pagination button {
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
     padding: 8px 12px;
-    border-radius: 5px;
-    background-color: #27c7b8;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .pagination button:hover {
+    background-color: #E0F7FA;
     color: white;
-    text-decoration: none;
+    transform: scale(1.1);
   }
-  
-  .page-link:hover {
-    background-color: #009688;
+
+  .pagination .active {
+    background-color: var(--primary-color);
+    color: white;
   }
-  
+
+  .pagination button[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+  }
+
+  .pagination .react-paginate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }

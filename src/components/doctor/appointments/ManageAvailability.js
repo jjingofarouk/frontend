@@ -1,7 +1,7 @@
 // ManageAvailability.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Button from './ui/button';
+import Button from '../../ui/button';
 
 const ManageAvailability = () => {
   const [isAvailable, setIsAvailable] = useState(false);

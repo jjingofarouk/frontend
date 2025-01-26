@@ -5,8 +5,6 @@ import MedicationAdherence from './MedicationAdherence';
 import MedicinePrices from './MedicinePrices';
 import MedicationHistory from './MedicationHistory';
 import EducationalContent from './EducationalContent';
-import AlternativeMedicationSuggestions from './AlternativeMedicationSuggestions';
-
 import MedicationContext from './MedicationContext';
 import LoadingSpinner from './ui/LoadingSpinner';
 import VoiceInput from './VoiceInput';
@@ -50,7 +48,6 @@ const MedicationsContent = () => {
         <Card className="w-full max-w-4xl mx-auto">
             <CardHeader>
                 <CardTitle>Your Medications</CardTitle>
-                <CardDescription>Manage and learn about your medications</CardDescription>
             </CardHeader>
             <CardContent>
                 <VoiceInput onCommand={handleMedicationSelect} />
@@ -63,7 +60,7 @@ const MedicationsContent = () => {
                             <Button
                                 key={item.id}
                                 variant="outline"
-                                className="h-auto py-4 flex flex-col items-center justify-center text-center"
+                                className="h-auto py-4 flex flex-row items-center justify-center text-center"
                                 onClick={() => handleMedicationSelect(item)}
                             >
                                 <span className="font-semibold">{item.name}</span>
@@ -86,10 +83,7 @@ const MedicationsContent = () => {
                                         <TabsTrigger value={0}><FontAwesomeIcon icon={faBookJournalWhills} className="mr-2" /> Drug Interaction</TabsTrigger>
                                         <TabsTrigger value={1}><FontAwesomeIcon icon={faBell} className="mr-2" /> Refill Reminders</TabsTrigger>
                                         <TabsTrigger value={2}><FontAwesomeIcon icon={faArrowRight} className="mr-2" /> Adherence</TabsTrigger>
-                                        <TabsTrigger value={3}><FontAwesomeIcon icon={faArrowRight} className="mr-2" /> Price Comparison</TabsTrigger>
-                                        <TabsTrigger value={4}><FontAwesomeIcon icon={faHistory} className="mr-2" /> History</TabsTrigger>
-                                        <TabsTrigger value={5}><FontAwesomeIcon icon={faBook} className="mr-2" /> Education</TabsTrigger>
-                                        <TabsTrigger value={6}><FontAwesomeIcon icon={faArrowRight} className="mr-2" /> Alternatives</TabsTrigger>
+                                        <TabsTrigger value={3}><FontAwesomeIcon icon={faBook} className="mr-2" /> Education</TabsTrigger>
                                     </TabsList>
 
 
@@ -104,18 +98,9 @@ const MedicationsContent = () => {
                                     </TabsContent>
 
                                     <TabsContent activeTab={activeTab} index={3}>
-                                        <MedicinePrices medication={selectedMedication} />
-                                    </TabsContent>
-
-                                    <TabsContent activeTab={activeTab} index={4}>
-                                        <MedicationHistory medication={selectedMedication} />
-                                    </TabsContent>
-                                    <TabsContent activeTab={activeTab} index={5}>
                                         <EducationalContent medication={selectedMedication} />
                                     </TabsContent>
-                                    <TabsContent activeTab={activeTab} index={6}>
-                                        <AlternativeMedicationSuggestions medication={selectedMedication} />
-                                    </TabsContent>
+                                
                                 </Tabs>
                             </CardContent>
                         </Card>

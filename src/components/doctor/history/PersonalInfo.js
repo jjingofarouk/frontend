@@ -1,14 +1,14 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import Input  from './ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import Label from './ui/Label';
-import Separator from './ui/Separator';
-import Button  from './ui/button';
-import Calendar  from './ui/Calendar';
-import Popover from './ui/Popover';
-import PopoverContent from './ui/Popover';
-import PopoverTrigger  from './ui/Popover';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import Input  from '../../ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
+import Label from '../../ui/label';
+import Separator from '../../ui/Separator';
+import Button  from '../../ui/button';
+import Calendar  from '../../ui/Calendar';
+import Popover from '../../ui/Popover';
+import PopoverContent from '../../ui/Popover';
+import PopoverTrigger  from '../../ui/Popover';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Button, Form, Spinner } from 'react-bootstrap'; // Import necessary Bootstrap components
 import { useNavigate } from 'react-router-dom';
+import './SignUp.css'
 
 const SignUp = ({ onLogin }) => {
     const [email, setEmail] = useState('');

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { LineChart, BarChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { AlertCircle, Activity, Truck, Thermometer, Zap, Droplet, Battery, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Alert, AlertDescription, AlertTitle } from './ui/alert';
-import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
-import Button  from './ui/button';
-import Badge  from './ui/badge';
+import { Alert, AlertDescription, AlertTitle } from '../../ui/alert';
+import { Card, CardHeader, CardTitle, CardContent } from '../../ui/card';
+import Button  from '../../ui/button';
+import Badge  from '../../ui/badge';
 import './CommandCenter.css';
 
 const AdvancedCommandCenter = () => {

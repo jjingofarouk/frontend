@@ -1,8 +1,7 @@
 // src/components/ui/AlertDialog.js
-import React from 'react';
-import './AlertDialog.css';
+import React, { useEffect } from "react";
+import "./AlertDialog.css";
 
-// Standalone Components
 export const AlertDialogContent = ({ children }) => (
   <div className="alert-dialog-content">{children}</div>
 );
@@ -23,25 +22,47 @@ export const AlertDialogFooter = ({ children }) => (
   <div className="alert-dialog-footer">{children}</div>
 );
 
-export const AlertDialogAction = ({ children, onClick }) => (
-  <button className="alert-dialog-action" onClick={onClick}>
+export const AlertDialogAction = ({ children, onClick, variant = "default" }) => (
+  <button className={`alert-dialog-action alert-dialog-action-${variant}`} onClick={onClick}>
     {children}
   </button>
 );
 
-// Main AlertDialog Component
-const AlertDialog = ({ isOpen, onClose, title, children }) => {
+const AlertDialog = ({ isOpen, onClose, title, children, actions = [] }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"; // Prevent background scrolling
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = ""; // Clean up
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="alert-dialog-overlay">
-      <div className="alert-dialog-box">
+    <div className="alert-dialog-overlay" onClick={onClose} role="dialog" aria-labelledby="alert-title">
+      <div
+        className="alert-dialog-box"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+        role="document"
+      >
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogTitle id="alert-title">{title}</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>{children}</AlertDialogDescription>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={onClose}>Close</AlertDialogAction>
+          {actions.map((action, index) => (
+            <AlertDialogAction
+              key={index}
+              onClick={action.onClick}
+              variant={action.variant || "default"}
+            >
+              {action.label}
+            </AlertDialogAction>
+          ))}
         </AlertDialogFooter>
       </div>
     </div>

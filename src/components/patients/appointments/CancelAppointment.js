@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './BookAppointment.css'; // Import CSS file for styling
+import './CancelAppointment.css'; // Import CSS file for styling
 
 const CancelAppointment = () => {
     const [appointments, setAppointments] = useState([]);

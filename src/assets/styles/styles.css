@@ -1,0 +1,52 @@
+/* Global Typography */
+body {
+    font-family: 'Roboto', 'Arial', sans-serif; /* Adding a modern font for cleaner text */
+    font-size: 16px; /* Set a consistent font size */
+    line-height: 1.6; /* Increased line height for better readability */
+    letter-spacing: 0.5px; /* Slight letter spacing for modern feel */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', 'Arial', sans-serif; /* Consistent with body font */
+    font-weight: 700; /* Make headings bold */
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.7; /* Slightly larger line height for paragraphs */
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Enhanced readability */
+  a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: var(--accent-color);
+  }
+  /* Buttons */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px; /* Rounded corners for a soft look */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: var(--secondary-color); /* Subtle color change on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for hover effect */
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(38, 198, 218, 0.5); /* Focus ring with accent color */
+  }
+  

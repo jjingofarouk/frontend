@@ -94,7 +94,6 @@ import {
         icon: <RiFilePaperLine size="2em" />,
         items: [
           { href: "visits", label: "Patient Visits" },
-          { href: "vitals", label: "Vital Signs" },
           { href: "labs", label: "Lab Results" },
           { href: "rad", label: "Imaging" },
           { href: "history", label: "Patient History" },

@@ -23,9 +23,7 @@ const SecondOpinionsLink = () => {
   const [matchedSpecialists, setMatchedSpecialists] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [opinions, setOpinions] = useState([]);
-  const [insuranceVerification, setInsuranceVerification] = useState(null);
   const [anonymizedSubmission, setAnonymizedSubmission] = useState(false);
-  const [followUps, setFollowUps] = useState([]);
   const [specialistRatings, setSpecialistRatings] = useState({});
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [loading, setLoading] = useState(true);
@@ -34,8 +32,6 @@ const SecondOpinionsLink = () => {
     const fetchData = async () => {
       await Promise.all([
         fetchSpecialists(),
-        fetchInsuranceVerification(),
-        fetchFollowUps(),
         fetchSpecialistRatings(),
       ]);
       setLoading(false);
@@ -50,17 +46,8 @@ const SecondOpinionsLink = () => {
     setSpecialists(data);
   };
 
-  const fetchInsuranceVerification = async () => {
-    const response = await fetch('/api/insurance-verification');
-    const data = await response.json();
-    setInsuranceVerification(data);
-  };
 
-  const fetchFollowUps = async () => {
-    const response = await fetch('/api/follow-ups');
-    const data = await response.json();
-    setFollowUps(data);
-  };
+
 
   const fetchSpecialistRatings = async () => {
     const response = await fetch('/api/specialist-ratings');
@@ -91,9 +78,7 @@ const SecondOpinionsLink = () => {
     console.log('Submitting anonymized case');
   };
 
-  const scheduleFollowUp = (specialistId) => {
-    console.log(`Scheduling follow-up with specialist ${specialistId}`);
-  };
+
 
   const rateSpecialist = (specialistId, rating) => {
     setSpecialistRatings(prevRatings => ({
@@ -137,9 +122,6 @@ const SecondOpinionsLink = () => {
           <AiMatching />
         </TabsContent>
 
-        <TabsContent value="opinions">
-          <MyOpinions opinions={opinions} scheduleFollowUp={scheduleFollowUp} />
-        </TabsContent>
 
         <TabsContent value="education">
           <EducationResources />
@@ -147,13 +129,11 @@ const SecondOpinionsLink = () => {
       </Tabs>
 
       <FileUploadSection uploadedFiles={uploadedFiles} handleFileUpload={handleFileUpload} />
-      <InsuranceVerification insuranceVerification={insuranceVerification} />
       <CollaborationTools 
         submitAnonymizedCase={submitAnonymizedCase} 
         selectedLanguage={selectedLanguage} 
         setSelectedLanguage={setSelectedLanguage} 
       />
-      <UpcomingFollowUps followUps={followUps} />
     </motion.div>
   );
 };
@@ -227,14 +207,14 @@ const AiMatching = () => (
   </div>
 );
 
-const MyOpinions = ({ opinions, scheduleFollowUp }) => (
+const MyOpinions = ({ opinions }) => (
   <div className="bg-white p-4 rounded-lg shadow">
     <h3 className="text-xl font-semibold mb-4">My Second Opinions</h3>
     {opinions.map(opinion => (
       <div key={opinion.id} className="mb-4 p-4 border rounded">
         <h4 className="font-semibold">{opinion.specialistName}</h4>
         <p>{opinion.summary}</p>
-        <Button onClick={() => scheduleFollowUp(opinion.specialistId)}>
+        <Button>
           <FaCalendarCheck className="mr-2" /> Schedule Follow-up
         </Button>
       </div>
@@ -268,21 +248,7 @@ const FileUploadSection = ({ uploadedFiles, handleFileUpload }) => (
   </div>
 );
 
-const InsuranceVerification = ({ insuranceVerification }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-    <div className="bg-white p-4 rounded-lg shadow">
-      <h3 className="text-xl font-semibold mb-4">Insurance Verification</h3>
-      {insuranceVerification ? (
-        <div>
-          <p>Status: {insuranceVerification.status}</p>
-          <p>Coverage: {insuranceVerification.coverage}</p>
-        </div>
-      ) : (
-        <p>Verifying insurance coverage...</p>
-      )}
-    </div>
-  </div>
-);
+
 
 const CollaborationTools = ({ submitAnonymizedCase, selectedLanguage, setSelectedLanguage }) => (
   <div className="mt-6">

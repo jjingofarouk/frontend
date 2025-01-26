@@ -5,7 +5,7 @@ import FieldResearchKit from './FieldResearchKit';
 import ClinicalTrialProtocolGenerator from './ClinicalTrialProtocolGenerator';
 import QualitativeDataAnalysisSuite from './QualitativeDataAnalysisSuite';
 import ClinicalTrials from './ClinicalTrials';
-import { Select } from '../ui/select'; // Assuming you will use your custom Select component
+import { Select } from '../../ui/select'; // Assuming you will use your custom Select component
 
 const ResearchTools = () => {
   const [selectedTool, setSelectedTool] = useState("");

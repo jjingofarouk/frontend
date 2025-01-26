@@ -1,7 +1,6 @@
 // SymptomCheckerPage.js
 import React from 'react';
 import './SymptomChecker.css'; // Create a CSS file for styling
-import Sidebar from './Sidebar'; // Import Sidebar component
 import Symptom from './Symptom'; // Import SymptomChecker component
 
 const SymptomChecker = () => {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import Button from "./ui/button";
-import TextArea from "./ui/textarea";
-import ScrollArea from "./ui/scroll-area";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import Button from "../../ui/button";
+import TextArea from "../../ui/textarea";
+import ScrollArea from "../../ui/scroll-area";
 import { FileText, PenTool, Save } from 'lucide-react';
 
 const CME = () => {

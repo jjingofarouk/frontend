@@ -2,9 +2,16 @@
 
 :root {
   --dark-blue: #002432;
-  --light-gray: #dfe4e5;
+  --light-gray: #F5F7FA;
   --teal: #27c7b8;
-  --orange: #f78837;
+  --orange: #FF7043;
+  --primary-color: #004C54; /* Deep Teal */
+  --secondary-color: #009688; /* Medium Teal */
+  --accent-color: #FF7043; /* Coral Orange */
+  --background-color: #F5F7FA; /* Light Gray */
+  --text-color: #333333; /* Dark Gray */
+  --success-color: #4CAF50; /* Green */
+  --error-color: #D32F2F; /* Red */
 }
 
 .lab-manager {
@@ -27,6 +34,7 @@
 /* Accordion Styles */
 .MuiAccordion-root {
   background-color: #dfe4e5;
+  color: #000;
   box-shadow: 0 4px 6px rgba(0, 36, 50, 0.1);
   margin-bottom: 1.5rem;
   transition: box-shadow 0.3s ease;
@@ -41,7 +49,7 @@
 }
 
 .MuiAccordionSummary-content h6 {
-  color: #dfe4e5;
+  color: #002432;
   font-weight: 600;
 }
 
@@ -68,8 +76,8 @@
 
 /* Buttons */
 .MuiButton-containedPrimary {
-  background-color: var(--teal);
-  color: #dfe4e5;
+  background-color: #e57120;
+  color: #002432;
   font-weight: 600;
   transition: all 0.3s ease;
 }

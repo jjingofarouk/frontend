@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Card } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate from react-router-dom
 import { toast } from "react-toastify"; // Import toast for notifications
 

@@ -1,10 +1,10 @@
 // HistoryOfPresentIllness.js
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import  TextArea  from './ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import  TextArea  from '../../ui/textarea';
 import { socratesFields } from './socratesFields'; // Importing socratesFields
-import Input  from './ui/input'; // Importing Input for additional fields
+import Input  from '../../ui/input'; // Importing Input for additional fields
 
 const HistoryOfPresentIllness = ({ historyOfPresentIllness, handleInputChange }) => (
   <Card>

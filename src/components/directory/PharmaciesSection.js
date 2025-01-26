@@ -154,7 +154,7 @@ const PharmaciesSection = () => {
         <Map locations={currentPharmacies.map(pharmacy => ({ lat: pharmacy.lat, lng: pharmacy.lng }))} />
       )}
       <div className="pagination">
-        <button onClick={() => handlePageChange(1)} disabled={currentPage === 1}>First</button>
+        <button onClick={() => handlePageChange(1)} disabled={currentPage === 1}></button>
         <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>‹</button>
         {[...Array(totalPages).keys()].slice(0, 5).map(page => (
           <button
@@ -166,7 +166,7 @@ const PharmaciesSection = () => {
           </button>
         ))}
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>›</button>
-        <button onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
+        <button onClick={handleLastPage} disabled={currentPage === totalPages}></button>
       </div>
     </section>
   );

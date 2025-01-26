@@ -1,7 +1,7 @@
 import React from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import Badge from './badge.js';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
+import Badge from '../ui/badge.js';
 import { MessageCircle, ThumbsUp, Share2, TrendingUp, Users, BarChart, Activity, Users as UsersIcon } from 'lucide-react';
 import './Forum.css';
 

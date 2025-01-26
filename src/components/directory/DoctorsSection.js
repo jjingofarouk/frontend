@@ -85,7 +85,6 @@ const DoctorsSection = () => {
   };
 
   const handleShare = (doctor) => {
-    // In a real app, this would open a share dialog
     alert(`Sharing ${doctor.name}'s profile`);
   };
 
@@ -109,47 +108,60 @@ const DoctorsSection = () => {
     </div>
   );
 
-  if (loading) return (
-    <div className="loading-indicator">
-      <div className="spinner"></div>
-      <p>Loading doctors...</p>
-    </div>
-  );
-  if (error) return <p className="error-message">{error}</p>;
+  if (loading) {
+    return (
+      <div className="loading-indicator">
+        <div className="spinner"></div>
+        <p>Loading doctors...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="error-message">{error}</p>;
+  }
 
   return (
     <div className="doctors-section">
       <h2>Doctors</h2>
 
+      {/* Search Bar */}
       <div className="search-bar">
         <Search className="search-icon" />
-        <input 
-          type="text" 
-          placeholder="Search by name, phone, or email..." 
-          value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)} 
+        <input
+          type="text"
+          placeholder="Search by name, phone, or email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           aria-label="Search doctors"
         />
         {searchTerm && (
-          <button className="clear-search" onClick={handleClearSearch} aria-label="Clear search">
+          <button
+            className="clear-search"
+            onClick={handleClearSearch}
+            aria-label="Clear search"
+          >
             <X />
           </button>
         )}
       </div>
 
+      {/* Filters and Sorting */}
       <div className="filters-sort">
-        <select 
-          value={selectedSpecialty} 
+        <select
+          value={selectedSpecialty}
           onChange={(e) => setSelectedSpecialty(e.target.value)}
           aria-label="Filter by specialty"
         >
-          {specialties.map(specialty => (
-            <option key={specialty} value={specialty}>{specialty}</option>
+          {specialties.map((specialty) => (
+            <option key={specialty} value={specialty}>
+              {specialty}
+            </option>
           ))}
         </select>
 
-        <select 
-          value={sortOption} 
+        <select
+          value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
           aria-label="Sort by"
         >
@@ -158,33 +170,35 @@ const DoctorsSection = () => {
           <option value="rating">Sort by Rating</option>
         </select>
 
-        <select 
-          value={itemsPerPage} 
+        <select
+          value={itemsPerPage}
           onChange={(e) => setItemsPerPage(parseInt(e.target.value, 10))}
           aria-label="Items per page"
         >
-          {[5, 10, 15, 20].map(size => (
-            <option key={size} value={size}>{size} per page</option>
+          {[5, 10, 15, 20].map((size) => (
+            <option key={size} value={size}>
+              {size} per page
+            </option>
           ))}
         </select>
 
         <div className="view-mode">
-          <button 
-            onClick={() => setViewMode('grid')} 
+          <button
+            onClick={() => setViewMode('grid')}
             className={viewMode === 'grid' ? 'active' : ''}
             aria-label="Grid view"
           >
             <Grid />
           </button>
-          <button 
-            onClick={() => setViewMode('list')} 
+          <button
+            onClick={() => setViewMode('list')}
             className={viewMode === 'list' ? 'active' : ''}
             aria-label="List view"
           >
             <List />
           </button>
-          <button 
-            onClick={() => setViewMode('map')} 
+          <button
+            onClick={() => setViewMode('map')}
             className={viewMode === 'map' ? 'active' : ''}
             aria-label="Map view"
           >
@@ -193,18 +207,19 @@ const DoctorsSection = () => {
         </div>
       </div>
 
+      {/* Display Modes */}
       {viewMode === 'map' ? (
         <div className="map-view">
           <svg viewBox="0 0 100 100" className="simple-map">
             <rect x="0" y="0" width="100" height="100" fill="#dfe4e5" />
             {currentDoctors.map((doctor, index) => (
-              <circle 
-                key={index} 
-                cx={doctor.latitude} 
-                cy={doctor.longitude} 
-                r="2" 
-                fill="#27c7b8" 
-                className="doctor-marker" 
+              <circle
+                key={index}
+                cx={doctor.latitude || Math.random() * 100}
+                cy={doctor.longitude || Math.random() * 100}
+                r="2"
+                fill="#27c7b8"
+                className="doctor-marker"
               />
             ))}
           </svg>
@@ -215,27 +230,53 @@ const DoctorsSection = () => {
             currentDoctors.map((doctor, index) => (
               <div key={index} className="doctor-item">
                 <h3>{doctor.name}</h3>
-                <p><strong>Specialty:</strong> {doctor.specialties || 'N/A'}</p>
-                <p><strong>Contact:</strong> {doctor.phone || 'N/A'}</p>
-                <p><strong>Email:</strong> {doctor.email || 'N/A'}</p>
-                <p><strong>Location:</strong> {doctor.location || 'N/A'}</p>
+                <p>
+                  <strong>Specialty:</strong> {doctor.specialties || 'N/A'}
+                </p>
+                <p>
+                  <strong>Contact:</strong> {doctor.phone || 'N/A'}
+                </p>
+                <p>
+                  <strong>Email:</strong> {doctor.email || 'N/A'}
+                </p>
+                <p>
+                  <strong>Location:</strong> {doctor.location || 'N/A'}
+                </p>
                 <div className="doctor-rating">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} fill={i < doctor.rating ? "#f78837" : "none"} stroke="#f78837" />
+                    <Star
+                      key={i}
+                      fill={i < doctor.rating ? '#f78837' : 'none'}
+                      stroke="#f78837"
+                    />
                   ))}
                 </div>
                 <div className="doctor-actions">
-                  <button onClick={() => toggleFavorite(doctor.id)} className={`favorite-btn ${favorites.includes(doctor.id) ? 'active' : ''}`}>
-                    <Heart fill={favorites.includes(doctor.id) ? "#f78837" : "none"} />
+                  <button
+                    onClick={() => toggleFavorite(doctor.id)}
+                    className={`favorite-btn ${
+                      favorites.includes(doctor.id) ? 'active' : ''
+                    }`}
+                  >
+                    <Heart
+                      fill={
+                        favorites.includes(doctor.id) ? '#f78837' : 'none'
+                      }
+                    />
                   </button>
-                  <button onClick={() => handleShare(doctor)} className="share-btn">
+                  <button
+                    onClick={() => handleShare(doctor)}
+                    className="share-btn"
+                  >
                     <Share2 />
                   </button>
-                  <button onClick={() => handleContact(doctor)} className="contact-btn">
+                  <button
+                    onClick={() => handleContact(doctor)}
+                    className="contact-btn"
+                  >
                     <Phone />
                   </button>
                 </div>
-                <a href={doctor.profile_url || '#'} target="_blank" rel="noopener noreferrer" className="view-profile">View Profile</a>
               </div>
             ))
           ) : (
@@ -244,38 +285,71 @@ const DoctorsSection = () => {
         </div>
       )}
 
+      {/* Pagination */}
       <div className="pagination">
-        <button onClick={handleFirstPage} disabled={currentPage === 1} className="pagination-button">
-          &laquo;&laquo; First
+        <button
+          onClick={handleFirstPage}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          &laquo;&laquo;
         </button>
-        <button onClick={handlePrevPage} disabled={currentPage === 1} className="pagination-button">
-          &laquo; Prev
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          &laquo;
         </button>
-        {[...Array(totalPages).keys()].slice(Math.max(0, currentPage - 3), Math.min(totalPages, currentPage + 2)).map(number => (
-          <button 
-            key={number + 1}
-            onClick={() => handlePageChange(number + 1)}
-            className={`pagination-button ${currentPage === number + 1 ? 'active' : ''}`}
-          >
-            {number + 1}
-          </button>
-        ))}
-        <button onClick={handleNextPage} disabled={currentPage === totalPages} className="pagination-button">
-          Next &raquo;
+        {[...Array(totalPages).keys()]
+          .slice(
+            Math.max(0, currentPage - 3),
+            Math.min(totalPages, currentPage + 2)
+          )
+          .map((number) => (
+            <button
+              key={number + 1}
+              onClick={() => handlePageChange(number + 1)}
+              className={`pagination-button ${
+                currentPage === number + 1 ? 'active' : ''
+              }`}
+            >
+              {number + 1}
+            </button>
+          ))}
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          &raquo;
         </button>
-        <button onClick={handleLastPage} disabled={currentPage === totalPages} className="pagination-button">
-          Last &raquo;&raquo;
+        <button
+          onClick={handleLastPage}
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          &raquo;&raquo;
         </button>
       </div>
 
+      {/* Back to Top Button */}
       {showBackToTop && (
-        <button className="back-to-top" onClick={handleBackToTop} aria-label="Back to top">
+        <button
+          className="back-to-top"
+          onClick={handleBackToTop}
+          aria-label="Back to top"
+        >
           <ArrowUp />
         </button>
       )}
 
+      {/* Contact Modal */}
       {showContactModal && selectedDoctor && (
-        <ContactModal doctor={selectedDoctor} onClose={() => setShowContactModal(false)} />
+        <ContactModal
+          doctor={selectedDoctor}
+          onClose={() => setShowContactModal(false)}
+        />
       )}
     </div>
   );

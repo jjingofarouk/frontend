@@ -1,130 +1,135 @@
-/* Root Variables */
-:root {
-  --primary-color: #004C54; /* Deep Teal */
-  --secondary-color: #009688; /* Medium Teal */
-  --accent-color: #FF7043; /* Coral Orange */
-  --background-color: #F5F7FA; /* Light Gray */
-  --text-color: #333333; /* Dark Gray */
-  --success-color: #4CAF50; /* Green */
-  --error-color: #D32F2D; /* Red */
-  --card-border-radius: 12px;
-  --shadow-light: rgba(0, 0, 0, 0.1) 0px 4px 8px;
-  --transition-speed: 0.3s ease-in-out;
+/* DoctorHome.css - Advanced Mobile-Optimized CSS for Doctor Dashboard */
+
+/* General Reset */
+body, h1, h2, h3, p, ul, li, a, button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Dashboard Layout */
-.dashboard {
-  background-color: var(--background-color);
-  min-height: 100vh;
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  font-family: 'Arial', sans-serif;
-  color: var(--text-color);
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-.dashboard-content {
-  max-width: 1200px;
-  width: 100%;
-}
-
-/* Header */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.dashboard-header h1 {
-  font-size: 1.8rem;
-  color: var(--primary-color);
-}
-
-.medical-tip {
-  font-size: 1rem;
-  color: var(--accent-color);
-  font-weight: bold;
-}
-
-/* Dashboard Items - Grid Layout */
-.dashboard-items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-/* Cards Styling */
-.dashboard-item {
-  background-color: white;
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--shadow-light);
-  padding: 20px;
-  transition: box-shadow var(--transition-speed);
+.dashboard-container {
+  padding: 16px;
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
-.dashboard-item h2 {
-  margin-top: 0;
-  color: var(--secondary-color);
+/* Dashboard Sections */
+.dashboard-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.dashboard-item p {
-  margin: 10px 0;
+/* Dashboard Card Styles */
+.dashboard-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  overflow: hidden;
 }
 
-.dashboard-item:hover {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 12px;
+.dashboard-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #007aff;
 }
 
-/* Links and Buttons */
-a {
+.notification-item, .appointment-item, .task-item {
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.notification-item:last-child, .appointment-item:last-child, .task-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+  display: inline-block;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
   text-decoration: none;
-  color: var(--primary-color);
-}
-
-a:hover {
-  text-decoration: underline;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
+  background-color: #007aff;
   color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: var(--card-border-radius);
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
-  text-align: center;
 }
 
 .btn-primary:hover {
-  background-color: var(--secondary-color);
+  background-color: #005bb5;
 }
 
-/* List Styling */
-.dashboard-item ul {
-  padding: 0;
-  list-style: none;
+.btn-secondary {
+  background-color: #f0f0f0;
+  color: #007aff;
 }
 
-.dashboard-item ul li {
-  background-color: var(--background-color);
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: var(--card-border-radius);
+.btn-secondary:hover {
+  background-color: #d9d9d9;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
+/* Responsive Styles for Mobile Devices */
+@media screen and (max-width: 768px) {
+  .dashboard-container {
+    padding: 12px;
   }
 
-  .dashboard-items {
-    grid-template-columns: 1fr;
+  .dashboard-card {
+    padding: 12px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 16px;
+  }
+
+  .notification-item, .appointment-item, .task-item {
+    font-size: 13px;
+  }
+
+  .btn-primary, .btn-secondary {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dashboard-container {
+    padding: 8px;
+  }
+
+  .dashboard-card {
+    padding: 8px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 14px;
+  }
+
+  .notification-item, .appointment-item, .task-item {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .btn-primary, .btn-secondary {
+    font-size: 11px;
+    padding: 6px 8px;
   }
 }

@@ -263,11 +263,8 @@ const Vitals = () => {
         <Button variant="primary" onClick={handleShareData}>
           <FaShareAlt className="mr-2" /> Share Data
         </Button>
-        <Button variant="outline" onClick={scheduleConsultation}>
-          <FaCalendarPlus className="mr-2" /> Schedule A Consultation
-        </Button>
         <Button variant="secondary" onClick={startVoiceLogging}>
-          <FaMicrophone className="mr-2" /> Start Voice Logging
+          <FaMicrophone className="mr-2" /> Voice Logging
         </Button>
       </div>
 

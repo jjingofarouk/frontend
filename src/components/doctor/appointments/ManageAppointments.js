@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Card, CardContent } from './ui/card';
+import { Card, CardContent } from '../../ui/card';
 import { BookOpen, Calendar, XCircle, UserCheck } from 'lucide-react';
-import Button from './ui/button';
+import Button from '../../ui/button';
 import {
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
-} from './ui/tabs';
+} from '../../ui/tabs';
 import ApproveAppointment from './PendingAppointment';
 import RebookAppointment from './RescheduleAppointment';
 import CancelAppointment from './CancelAppointment';

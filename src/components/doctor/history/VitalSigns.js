@@ -27,8 +27,8 @@ import { Line } from 'react-chartjs-2';  // Or Bar, Pie, etc., depending on your
 import { Bar } from 'react-chartjs-2';  // Or Bar, Pie, etc., depending on your needs
 
 
-import { Alert, AlertDescription } from './ui/alert';
-import Button from './ui/button';
+import { Alert, AlertDescription } from '../../ui/alert';
+import Button from '../../ui/button';
 import {
   Dialog,
   DialogTrigger,
@@ -36,16 +36,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from './ui/dialog';
+} from '../../ui/dialog';
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from './ui/select';
-import Switch from './ui/switch';
-import Input from './ui/input';
+} from '../../ui/select';
+import Switch from '../../ui/switch';
+import Input from '../../ui/input';
 
 // Custom Card Component for each Vital Sign
 const VitalSignCard = ({ icon, label, value, onAlertSettings }) => {

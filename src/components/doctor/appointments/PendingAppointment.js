@@ -1,7 +1,7 @@
 // ApproveAppointment.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Button from './ui/button.js';
+import Button from '../../ui/button.js';
 
 const ApproveAppointment = ({ onComplete }) => {
   const [appointments, setAppointments] = useState([]);

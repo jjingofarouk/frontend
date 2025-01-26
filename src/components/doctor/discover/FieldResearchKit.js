@@ -4,7 +4,7 @@ import Map, { Marker, Popup } from 'react-map-gl'; // Example library for mappin
 import axios from 'axios'; // For API calls
 import { ToastContainer, toast } from 'react-toastify'; // For notifications
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-import LoadingSpinner from '../ui/LoadingSpinner'; // Custom loading spinner component
+import LoadingSpinner from '../../ui/LoadingSpinner'; // Custom loading spinner component
 import SampleForm from '../SampleForm'; // Custom form component for entering sample data
 import { Bar } from 'react-chartjs-2'; // For data visualization
 import "./FieldResearchKit.css"; // Custom CSS for styling

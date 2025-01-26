@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"; 
 import { Button, Col, Form, Row, Card, Spinner, Modal } from "react-bootstrap"; 
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom"; 
 import { toast } from "react-toastify"; 
 import { login, setError } from "./authSlice"; // Import actions from authSlice

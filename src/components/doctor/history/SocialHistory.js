@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import TextArea  from './ui/textarea';
-import  Checkbox from './ui/Checkbox';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import TextArea  from '../../ui/textarea';
+import  Checkbox from '../../ui/Checkbox';
 
 const SocialHistory = ({ socialHistory, handleInputChange, handleCheckboxChange }) => (
   <Card>

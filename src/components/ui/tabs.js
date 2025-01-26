@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Tabs.css';
 
 export const Tabs = ({ children, className = '', defaultActiveTab = 0, ...props }) => {
-    const [activeTab, setActiveTab] = useState(defaultActiveTab); // Control active tab
+    const [activeTab, setActiveTab] = useState(defaultActiveTab);
 
     const handleTabClick = (index) => {
         setActiveTab(index); // Set active tab on click
@@ -12,9 +12,9 @@ export const Tabs = ({ children, className = '', defaultActiveTab = 0, ...props 
         <div className={`tabs ${className}`} {...props}>
             {React.Children.map(children, (child, index) =>
                 React.cloneElement(child, {
-                    activeTab, // Pass activeTab to children
-                    setActiveTab: handleTabClick, // Pass setter function to children
-                    index, // Pass index to help identify the trigger/content
+                    activeTab,
+                    setActiveTab: handleTabClick,
+                    index,
                 })
             )}
         </div>
@@ -26,8 +26,8 @@ export const TabsList = ({ children, className = '', activeTab, setActiveTab, ..
         <div className={`tabs-list ${className}`} {...props}>
             {React.Children.map(children, (child, index) =>
                 React.cloneElement(child, {
-                    active: activeTab === index, // Set active if the current tab is selected
-                    onClick: () => setActiveTab(index), // Handle tab click
+                    active: activeTab === index,
+                    onClick: () => setActiveTab(index),
                 })
             )}
         </div>
@@ -39,6 +39,9 @@ export const TabsTrigger = ({ children, className = '', active, ...props }) => {
         <button
             className={`tabs-trigger ${className} ${active ? 'active' : ''}`}
             {...props}
+            aria-selected={active}
+            role="tab"
+            tabIndex={active ? 0 : -1}
         >
             {children}
         </button>
@@ -50,5 +53,5 @@ export const TabsContent = ({ children, className = '', activeTab, index, ...pro
         <div className={`tabs-content ${className}`} {...props}>
             {children}
         </div>
-    ) : null; // Only render the active tab's content
+    ) : null;
 };

@@ -296,7 +296,7 @@ const Lab = () => {
 
   return (
     <div className="lab-manager">
-      <Typography variant="h4" gutterBottom>Advanced Lab Results Management Hub</Typography>
+      <Typography variant="h4" gutterBottom>Lab Results Manager</Typography>
 
       {/* Upload New Lab Result */}
       <Accordion>
@@ -380,7 +380,7 @@ const Lab = () => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
+              <TextField backgroundColor="#004C54"
                 label="Performed By"
                 value={newLabResult.performedBy}
                 onChange={(e) => setNewLabResult({ ...newLabResult, performedBy: e.target.value })}

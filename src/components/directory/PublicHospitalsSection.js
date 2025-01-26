@@ -84,7 +84,11 @@ const PublicHospitalsSection = () => {
       
       <div className={`hospitals-list ${viewMode}`}>
         {currentHospitals.map((hospital, index) => (
-          <div key={index} className="hospital-card">
+          <div
+            key={index}
+            className="hospital-card"
+            onClick={() => handleViewDetails(hospital)} // Trigger modal on click
+          >
             <img 
               src={hospital.photo} 
               alt={hospital.name} 
@@ -93,9 +97,8 @@ const PublicHospitalsSection = () => {
             <h3 className="hospital-name">{hospital.name}</h3>
             <p className="hospital-address">{hospital.address}</p>
 
-
             <p className="hospital-description">
-              <strong>About:</strong> {hospital.description}
+              <strong>About:</strong> {hospital.description || "No description yet"}
             </p>
             <p className="hospital-phone">
               <strong>Phone:</strong> {hospital.phone}
@@ -108,12 +111,6 @@ const PublicHospitalsSection = () => {
             >
               View Profile
             </a>
-            <button 
-              className="details-button"
-              onClick={() => handleViewDetails(hospital)}
-            >
-              View Details
-            </button>
           </div>
         ))}
       </div>
@@ -125,7 +122,7 @@ const PublicHospitalsSection = () => {
           disabled={currentPage === 1}
           className="pagination-button"
         >
-          &laquo; Prev
+          &laquo;
         </button>
         {[...Array(totalPages).keys()].slice(0, 5).map(number => (
           <button 
@@ -141,16 +138,21 @@ const PublicHospitalsSection = () => {
           disabled={currentPage === totalPages}
           className="pagination-button"
         >
-          Next &raquo;
+          &raquo;
         </button>
       </div>
 
       {/* Render the HospitalDetails component if a hospital is selected */}
       {selectedHospital && (
-        <HospitalDetails 
-          hospital={selectedHospital} 
-          onClose={handleCloseDetails} 
-        />
+        <div className="modal-overlay" onClick={handleCloseDetails}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-modal" onClick={handleCloseDetails}>×</button>
+            <HospitalDetails 
+              hospital={selectedHospital} 
+              onClose={handleCloseDetails} 
+            />
+          </div>
+        </div>
       )}
     </section>
   );

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FaFileUpload, FaChartLine, FaCode, FaSave, FaFolder } from 'react-icons/fa';
 import Chart from 'react-apexcharts';
-import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import Button from '../ui/button';
-import Input  from '../ui/input';
-import  TextArea  from '../ui/textarea';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Alert, AlertDescription, AlertTitle } from '../../ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import Button from '../../ui/button';
+import Input  from '../../ui/input';
+import  TextArea  from '../../ui/textarea';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../../ui/card';
 
 const TextAnalysis = () => {
   const [textData, setTextData] = useState('');

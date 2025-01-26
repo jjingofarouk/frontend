@@ -261,7 +261,7 @@ const Vaccination = () => {
 
   return (
     <div className="comprehensive-vaccination-system">
-      <Typography variant="h4" gutterBottom>Uganda Vaccination Management System</Typography>
+      <Typography variant="h4" gutterBottom>Vaccinations Manager</Typography>
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
@@ -483,7 +483,7 @@ const Vaccination = () => {
               <Typography variant="body2" paragraph>
                 Download our mobile app for easy access to your vaccination records on the go.
               </Typography>
-              <Button startIcon={<PhoneAndroid />} variant="contained" color="secondary">
+              <Button startIcon={<PhoneAndroid />} variant="contained" color="#FF7043">
                 Download App
               </Button>
             </CardContent>
