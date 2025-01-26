@@ -15,14 +15,13 @@ import {
   MenuItem,
   Slider,
   Typography,
-  Paper,
   Grid,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  ListItemButton, // Add this line
-  ListItemIcon,   // Add this line
-  ListItemText,   // Add this line
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Chip,
   Dialog,
   DialogTitle,
@@ -30,9 +29,17 @@ import {
   FormControlLabel,
   DialogContent,
   DialogActions,
-  LinearProgress
+  LinearProgress,
+  Tooltip,
+  IconButton,
+  Paper
 } from '@mui/material';
-import ExpandMoreIcon from './ExpandMore';
+import { 
+  ExpandMore as ExpandMoreIcon, 
+  Close as CloseIcon, 
+  Warning as WarningIcon, 
+  CheckCircle as CheckCircleIcon 
+} from '@mui/icons-material';
 import { debounce } from 'lodash';
 import symptomCombinations from './symptomCombinations';
 import symptomWeights from './symptomWeights';
@@ -45,7 +52,6 @@ import riskFactorWeights from './riskFactorWeights';
 import DrugInputSection from './DrugInputSection';
 import DrugHistory from './DrugHistory'; // Import the DrugHistory component
 import { calculateAgeGroup, calculateConfidence, getConfidenceLevel, getConfidenceColor } from './utils'; // Adjust the path as needed
-
 
 
 const loadPatientData = () => {
@@ -594,286 +600,489 @@ const handleDrugInputChange = (event) => {
     handleCloseDialog();
   };
 
-  const theme = {
+// Theme configuration
+const theme = {
+  primary: '#002432',
+  secondary: '#dfe4e5',
+  accent: '#27c7b8',
+  highlight: '#f78837',
+  hover: '#1a5f6e',
+  background: {
+    light: '#f0f4f5',
+    dark: '#001b24'
+  },
+  text: {
     primary: '#002432',
-    secondary: '#dfe4e5',
-    accent: '#27c7b8',
-    highlight: '#f78837'
-  };
+    secondary: '#45696f'
+  },
+  error: {
+    main: '#d32f2f',
+    light: '#ff6659'
+  }
+};
 
-  return (
-    <Paper elevation={3} sx={{ 
-      padding: '30px', 
-      margin: '30px', 
+return (
+  <Paper 
+    elevation={3} 
+    sx={{ 
+      padding: 4, 
+      margin: 4, 
       backgroundColor: theme.secondary,
-      borderRadius: '15px'
-    }}>
-      {loading && <LinearProgress />}
-  
-      <Typography variant="h3" gutterBottom sx={{ color: theme.primary, alignItems: 'center', fontWeight: 'bold' }}>
-        Symptom Checker
-      </Typography>
-  
-      {/* Drug History Option */}
-      <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-        <Grid item>
+      borderRadius: '15px',
+      boxShadow: `0 4px 6px rgba(0,0,0,0.1)`,
+      position: 'relative',
+      '@media (max-width: 600px)': {
+        padding: 2,
+        margin: 2
+      }
+    }}
+  >
+    {loading && <LinearProgress />}
+
+    <Typography 
+      variant="h3" 
+      gutterBottom 
+      sx={{ 
+        color: theme.primary, 
+        textAlign: 'center', 
+        fontWeight: 'bold',
+        '@media (max-width: 600px)': {
+          fontSize: '1.8rem'
+        }
+      }}
+    >
+      Symptom Checker
+    </Typography>
+
+    {/* Drug History Option */}
+    <Grid 
+      container 
+      spacing={2} 
+      sx={{ 
+        marginTop: 2,
+        alignItems: 'center' 
+      }}
+    >
+      <Grid item>
+        <Tooltip title="Toggle Drug History">
           <FormControlLabel
             control={
               <Checkbox
                 checked={showDrugHistory}
                 onChange={() => setShowDrugHistory(!showDrugHistory)}
+                color="primary"
               />
             }
             label="Show Drugs History"
           />
-        </Grid>
+        </Tooltip>
       </Grid>
-  
-      {showDrugHistory && drugHistory.length > 0 && (
-        <Box sx={{ marginTop: '20px' }}>
-          <Typography variant="h6" sx={{ color: theme.primary }}>
-            Your Drug History
-          </Typography>
-          <ul>
-            {drugHistory.map((drug, index) => (
-              <li key={index}>{drug.name}: {drug.dosage}</li>
-            ))}
-          </ul>
-        </Box>
-      )}
-  
-      {/* Profile Management UI */}
-      <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-        <Grid item>
-          <Button variant="outlined" onClick={() => setShowSaveDialog(true)} sx={{ color: theme.secondary, backgroundColor: theme.accent, fontWeight: 'bold' }}>
-            Save Profile
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="outlined" onClick={() => setShowLoadDialog(true)} sx={{ color: theme.secondary, backgroundColor: theme.accent, fontWeight: 'bold' }}>
-            Load Profile
-          </Button>
-        </Grid>
-        {currentProfile && (
-          <Grid item>
-            <Typography variant="body2">Current Profile: {currentProfile}</Typography>
-          </Grid>
-        )}
-      </Grid>
-  
-      <Button onClick={handleSave}>Save Patient Data </Button>
-  
-      <Typography variant="body1" paragraph sx={{ color: theme.primary, marginTop: '30px', marginBottom: '30px' }}>
-        Enter your symptoms and personal details for a more accurate assessment.
-      </Typography>
-  
-      <form onSubmit={checkSymptoms}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              name="age"
-              label="Age"
-              type="number"
-              value={patientData.age}
-              onChange={handlePatientDataChange}
-              InputProps={{ sx: { color: theme.primary } }}
-              InputLabelProps={{ sx: { color: theme.primary } }}
-              sx={{ backgroundColor: '#dfe4e5', borderRadius: '8px' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth>
-              <InputLabel sx={{ color: theme.primary }}>Gender</InputLabel>
-              <Select
-                name="gender"
-                value={patientData.gender}
-                onChange={handlePatientDataChange}
-                sx={{ color: theme.primary, backgroundColor: '#dfe4e5 ', borderRadius: '8px' }}
-              >
-                <MenuItem value="">Select</MenuItem>
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth>
-              <InputLabel sx={{ color: theme.primary }}>Recent Travel</InputLabel>
-              <Select
-                name="recentTravel"
-                value={patientData.recentTravel}
-                onChange={handlePatientDataChange}
-                sx={{ color: theme.primary, backgroundColor: '#dfe4e5', borderRadius: '8px' }}
-              >
-                <MenuItem value="">None</MenuItem>
-                <MenuItem value="Sub-Saharan Africa">Sub-Saharan Africa</MenuItem>
-                <MenuItem value="South Asia">South Asia</MenuItem>
-                <MenuItem value="East Asia">East Asia</MenuItem>
-                <MenuItem value="Latin America">Latin America</MenuItem>
-                <MenuItem value="Middle East">Middle East</MenuItem>
-                <MenuItem value="North America">North America</MenuItem>
-                <MenuItem value="Europe">Europe</MenuItem>
-                <MenuItem value="Oceania">Oceania</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-  
+    </Grid>
 
-        {/* Drug Input Section */}
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={8}>
-            <Autocomplete
-              options={drugOptions}
-              value={drugInput}
-              onChange={(event, newValue) => setDrugInput(newValue)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Enter Drug"
-                  fullWidth
-                  variant="outlined"
-                  sx={{ marginBottom: '10px', backgroundColor: '#dfe4e5', color: '#002432' }}
-                  onChange={handleDrugInputChange}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Button
-              onClick={handleAddDrug}
-              variant="contained"
-              sx={{ backgroundColor: '#dfe4e5 ', color: '#dfe4e5', width: '100%' }}
-            >
-              Add Drug
-            </Button>
-          </Grid>
-        </Grid>
-  
-        {/* Display Added Drugs */}
-        <Grid item xs={12}>
-          <Typography variant="h6" sx={{ marginTop: '20px' }}>Added Drugs:</Typography>
-          {drugHistory.length > 0 ? (
-            drugHistory.map((drug, index) => (
-              <Typography key={index} variant="body2" sx={{ marginTop: '5px' }}>
-                {drug.name}: {drug.dosage || 'Dosage not specified'}
-              </Typography>
-            ))
-          ) : (
-            <Typography variant="body2" sx={{ color: '#002432' }}>No drugs added yet.</Typography>
-          )}
-        </Grid>
-  
-        {/* Risk Factors Section */}
-        <Grid container spacing={2} sx={{ marginTop: '30px' }}>
-          <Grid item xs={12}>
-            <Button variant="contained" sx={{ backgroundColor: theme.accent, color: theme.secondary }} onClick={handleOpenDialog}>
-              Enter Risk Factors
-            </Button>
-          </Grid>
-        </Grid>
-  
-  {/* Risk Factors Dialog */}
-<Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="sm">
-  <DialogTitle sx={{ textAlign: 'center' }}>Let's Learn More About Your Health!</DialogTitle>
-  <DialogContent>
-    <Typography variant="body1" sx={{ marginBottom: '16px', textAlign: 'center' }}>
-      Please select any risk factors that apply to you. You can choose multiple options:
-    </Typography>
-    <List>
-      {Object.keys(riskFactorWeights).map((riskFactor) => (
-        <ListItem key={riskFactor}>
-          <ListItemButton
-            onClick={() => handleRiskFactorChange(riskFactor)}
-            sx={{
-              backgroundColor: selectedRiskFactors[riskFactor] ? theme.primary : 'transparent',
-              '&:hover': {
-                backgroundColor: selectedRiskFactors[riskFactor] ? theme.primary : theme.hover,
-              },
-              borderRadius: '8px',
-              transition: 'background-color 0.2s ease',
-            }}
-          >
-            <ListItemIcon>
-              <Checkbox
-                checked={selectedRiskFactors[riskFactor]}
-                onChange={() => handleRiskFactorChange(riskFactor)}
-                color="primary"
-              />
-            </ListItemIcon>
-            <ListItemText
-              primary={riskFactor.charAt(0).toUpperCase() + riskFactor.slice(1)}
-              primaryTypographyProps={{
-                sx: {
-                  fontWeight: selectedRiskFactors[riskFactor] ? 'bold' : 'normal',
-                },
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-  </DialogContent>
-  <DialogActions sx={{ justifyContent: 'space-between' }}>
-    <Button variant="outlined" onClick={handleCloseDialog} sx={{ flexGrow: 1, marginRight: '8px' }}>
-      Cancel
-    </Button>
-    <Button variant="contained" onClick={handleSubmit} sx={{ flexGrow: 1, color: theme.secondary }}>
-      Submit
-    </Button>
-  </DialogActions>
-</Dialog>
+    {showDrugHistory && drugHistory.length > 0 && (
+      <Box sx={{ marginTop: 2 }}>
+        <Typography 
+          variant="h6" 
+          sx={{ color: theme.primary }}
+        >
+          Your Drug History
+        </Typography>
+        <ul>
+          {drugHistory.map((drug, index) => (
+            <li key={index}>{drug.name}: {drug.dosage}</li>
+          ))}
+        </ul>
+      </Box>
+    )}
 
-  
-
-  
-        {symptomInputs}
-  
-        <Button
-          type="submit"
-          variant="contained"
+    {/* Profile Management UI */}
+    <Grid 
+      container 
+      spacing={2} 
+      sx={{ 
+        marginTop: 2,
+        justifyContent: 'space-between',
+        '@media (max-width: 600px)': {
+          flexDirection: 'column'
+        }
+      }}
+    >
+      <Grid item xs={12} sm={4}>
+        <Button 
+          variant="outlined" 
+          onClick={() => setShowSaveDialog(true)} 
           sx={{ 
-            marginTop: '30px', 
-            backgroundColor: theme.highlight, 
-            color: theme.secondary,
+            color: theme.secondary, 
+            backgroundColor: theme.accent, 
+            fontWeight: 'bold',
+            width: '100%',
             '&:hover': {
-              backgroundColor: theme.primary
+              backgroundColor: theme.hover
             }
           }}
         >
-          {loading ? <CircularProgress size={24} /> : 'Check Symptoms'}
+          Save Profile
         </Button>
-      </form>
-  
-      {/* Snackbar for Errors */}
-      <Snackbar
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <Button 
+          variant="outlined" 
+          onClick={() => setShowLoadDialog(true)} 
+          sx={{ 
+            color: theme.secondary, 
+            backgroundColor: theme.accent, 
+            fontWeight: 'bold',
+            width: '100%',
+            '&:hover': {
+              backgroundColor: theme.hover
+            }
+          }}
+        >
+          Load Profile
+        </Button>
+      </Grid>
+      {currentProfile && (
+        <Grid item xs={12} sm={4}>
+          <Typography variant="body2">
+            Current Profile: {currentProfile}
+          </Typography>
+        </Grid>
+      )}
+    </Grid>
+
+    <Button onClick={handleSave}>Save Patient Data</Button>
+
+    <Typography 
+      variant="body1" 
+      paragraph 
+      sx={{ 
+        color: theme.primary, 
+        marginTop: 3, 
+        marginBottom: 3,
+        textAlign: 'center'
+      }}
+    >
+      Enter your symptoms and personal details for a more accurate assessment.
+    </Typography>
+
+    <form onSubmit={checkSymptoms}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            name="age"
+            label="Age"
+            type="number"
+            value={patientData.age}
+            onChange={handlePatientDataChange}
+            InputProps={{ 
+              sx: { 
+                color: theme.primary,
+                backgroundColor: theme.secondary 
+              } 
+            }}
+            InputLabelProps={{ 
+              sx: { color: theme.primary } 
+            }}
+            sx={{ 
+              backgroundColor: theme.background.light, 
+              borderRadius: '8px' 
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <FormControl fullWidth>
+            <InputLabel sx={{ color: theme.primary }}>Gender</InputLabel>
+            <Select
+              name="gender"
+              value={patientData.gender}
+              onChange={handlePatientDataChange}
+              sx={{ 
+                color: theme.primary, 
+                backgroundColor: theme.secondary,
+                borderRadius: '8px'
+              }}
+            >
+              <MenuItem value="">Select</MenuItem>
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <FormControl fullWidth>
+            <InputLabel sx={{ color: theme.primary }}>Recent Travel</InputLabel>
+            <Select
+              name="recentTravel"
+              value={patientData.recentTravel}
+              onChange={handlePatientDataChange}
+              sx={{ 
+                color: theme.primary, 
+                backgroundColor: theme.secondary,
+                borderRadius: '8px'
+              }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="Sub-Saharan Africa">Sub-Saharan Africa</MenuItem>
+              <MenuItem value="South Asia">South Asia</MenuItem>
+              <MenuItem value="East Asia">East Asia</MenuItem>
+              <MenuItem value="Latin America">Latin America</MenuItem>
+              <MenuItem value="Middle East">Middle East</MenuItem>
+              <MenuItem value="North America">North America</MenuItem>
+              <MenuItem value="Europe">Europe</MenuItem>
+              <MenuItem value="Oceania">Oceania</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      {/* Drug Input Section */}
+      <Grid container spacing={2} alignItems="center" sx={{ marginTop: 2 }}>
+        <Grid item xs={12} sm={8}>
+          <Autocomplete
+            options={drugOptions}
+            value={drugInput}
+            onChange={(event, newValue) => setDrugInput(newValue)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Enter Drug"
+                fullWidth
+                variant="outlined"
+                sx={{ 
+                  marginBottom: 1, 
+                  backgroundColor: theme.secondary, 
+                  color: theme.primary 
+                }}
+                onChange={handleDrugInputChange}
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Button
+            onClick={handleAddDrug}
+            variant="contained"
+            sx={{ 
+              backgroundColor: theme.accent, 
+              color: theme.secondary, 
+              width: '100%',
+              '&:hover': {
+                backgroundColor: theme.hover
+              }
+            }}
+          >
+            Add Drug
+          </Button>
+        </Grid>
+      </Grid>
+
+      {/* Display Added Drugs */}
+      <Grid item xs={12}>
+        <Typography variant="h6" sx={{ marginTop: 2 }}>
+          Added Drugs:
+        </Typography>
+        {drugHistory.length > 0 ? (
+          drugHistory.map((drug, index) => (
+            <Typography 
+              key={index} 
+              variant="body2" 
+              sx={{ marginTop: 0.5 }}
+            >
+              {drug.name}: {drug.dosage || 'Dosage not specified'}
+            </Typography>
+          ))
+        ) : (
+          <Typography variant="body2" sx={{ color: theme.primary }}>
+            No drugs added yet.
+          </Typography>
+        )}
+      </Grid>
+
+      {/* Risk Factors Section */}
+      <Grid container spacing={2} sx={{ marginTop: 3 }}>
+        <Grid item xs={12}>
+          <Button 
+            variant="contained" 
+            sx={{ 
+              backgroundColor: theme.accent, 
+              color: theme.secondary,
+              '&:hover': {
+                backgroundColor: theme.hover
+              }
+            }} 
+            onClick={handleOpenDialog}
+          >
+            Enter Risk Factors
+          </Button>
+        </Grid>
+      </Grid>
+
+      {/* Risk Factors Dialog */}
+      <Dialog 
+        open={open} 
+        onClose={handleCloseDialog} 
+        fullWidth 
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.secondary,
+            color: theme.primary
+          }
+        }}
+      >
+        <DialogTitle sx={{ textAlign: 'center', color: theme.primary }}>
+          Let's Learn More About Your Health!
+        </DialogTitle>
+        <DialogContent>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              marginBottom: 2, 
+              textAlign: 'center',
+              color: theme.primary 
+            }}
+          >
+            Please select any risk factors that apply to you. You can choose multiple options:
+          </Typography>
+          <List>
+            {Object.keys(riskFactorWeights).map((riskFactor) => (
+              <ListItem key={riskFactor}>
+                <ListItemButton
+                  onClick={() => handleRiskFactorChange(riskFactor)}
+                  sx={{
+                    backgroundColor: selectedRiskFactors[riskFactor] 
+                      ? theme.primary 
+                      : 'transparent',
+                    '&:hover': {
+                      backgroundColor: selectedRiskFactors[riskFactor] 
+                        ? theme.primary 
+                        : theme.hover,
+                    },
+                    borderRadius: '8px',
+                    transition: 'background-color 0.2s ease',
+                  }}
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      checked={selectedRiskFactors[riskFactor]}
+                      onChange={() => handleRiskFactorChange(riskFactor)}
+                      color="primary"
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={riskFactor.charAt(0).toUpperCase() + riskFactor.slice(1)}
+                    primaryTypographyProps={{
+                      sx: {
+                        fontWeight: selectedRiskFactors[riskFactor] 
+                          ? 'bold' 
+                          : 'normal',
+                        color: theme.primary
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'space-between' }}>
+          <Button 
+            variant="outlined" 
+            onClick={handleCloseDialog} 
+            sx={{ 
+              flexGrow: 1, 
+              marginRight: 1,
+              color: theme.primary,
+              borderColor: theme.primary
+            }}
+          >
+            Cancel
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={handleSubmit} 
+            sx={{ 
+              flexGrow: 1, 
+              backgroundColor: theme.accent,
+              color: theme.secondary,
+              '&:hover': {
+                backgroundColor: theme.hover
+              }
+            }}
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {symptomInputs}
+
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ 
+          marginTop: 3, 
+          backgroundColor: theme.highlight, 
+          color: theme.secondary,
+          '&:hover': {
+            backgroundColor: theme.primary
+          }
+        }}
+      >
+        {loading ? <CircularProgress size={24} /> : 'Check Symptoms'}
+      </Button>
+    </form>
+
+    <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert onClose={() => setOpenSnackbar(false)} severity="error" sx={{ width: '100%' }}>
+        <Alert 
+          onClose={() => setOpenSnackbar(false)} 
+          severity="error" 
+          sx={{ 
+            width: '100%',
+            backgroundColor: theme.error.main,
+            color: theme.secondary
+          }}
+        >
           {error}
         </Alert>
       </Snackbar>
   
       {/* Results Section */}
       {results.length > 0 && (
-        <Box sx={{ marginTop: '40px' }}>
-          <Typography variant="h4" gutterBottom sx={{ color: theme.primary, fontWeight: 'bold' }}>
+        <Box sx={{ marginTop: 5 }}>
+          <Typography 
+            variant="h4" 
+            gutterBottom 
+            sx={{ 
+              color: theme.primary, 
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}
+          >
             Results
           </Typography>
           {results.map(result => (
             <Accordion 
               key={result.condition} 
               sx={{ 
-                marginBottom: '20px', 
+                marginBottom: 2, 
                 width: '100%',
                 backgroundColor: theme.secondary, 
                 borderRadius: '10px',
                 border: `2px solid ${theme.highlight}`,
                 '&:before': { display: 'none' },
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'scale(1.02)',
+                  boxShadow: `0 4px 6px rgba(0,0,0,0.1)`
+                }
               }}
             >
               <AccordionSummary
@@ -884,14 +1093,21 @@ const handleDrugInputChange = (event) => {
                   borderTopRightRadius: '8px',
                 }}
               >
-                <Typography variant="h6" sx={{ color: theme.primary, marginLeft: '20px', fontWeight: 'bold' }}>
+                <Typography 
+                  variant="h6" 
+                  sx={{ 
+                    color: theme.primary, 
+                    marginLeft: 2, 
+                    fontWeight: 'bold' 
+                  }}
+                >
                   {result.condition}
                 </Typography>
 
                 <Chip 
                   label={`Confidence: ${result.score.toFixed(0)}% (${result.confidenceLevel})`} 
                   sx={{ 
-                    marginLeft: '15px', 
+                    marginLeft: 2, 
                     backgroundColor: result.confidenceColor, 
                     color: theme.primary
                   }} 
@@ -902,30 +1118,42 @@ const handleDrugInputChange = (event) => {
                 <Typography
                   variant="body2"
                   sx={{
-                    marginTop: '10px',
+                    marginTop: 1,
                     color: theme.secondary,
                     backgroundColor: theme.primary,
-                    padding: '10px',
+                    padding: 2,
                     borderRadius: '8px',
                   }}
                 >
                   {guidance[result.condition] ? (
                     <>
-                      <Typography variant="body2" sx={{ marginTop: '10px', color: theme.accent }}>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          marginTop: 1, 
+                          color: theme.accent 
+                        }}
+                      >
                         <strong>Next Steps:</strong> {guidance[result.condition].steps}
                       </Typography>
                       <Typography
                         variant="body2"
                         sx={{
-                          marginTop: '10px',
-                          color: '#dfe4e5',
+                          marginTop: 1,
+                          color: theme.secondary,
                           textAlign: 'left',
                         }}
                       >
                         <strong>About this condition:</strong> 
                         {guidance[result.condition].content.split('\n').map((line, index) => (
                           line.trim() ? (
-                            <Typography key={index} variant="body2" component="p">{line}</Typography>
+                            <Typography 
+                              key={index} 
+                              variant="body2" 
+                              component="p"
+                            >
+                              {line}
+                            </Typography>
                           ) : (
                             <br key={index} />
                           )
@@ -941,8 +1169,17 @@ const handleDrugInputChange = (event) => {
       )}
   
       {/* Save Profile Dialog */}
-      <Dialog open={showSaveDialog} onClose={() => setShowSaveDialog(false)}>
-        <DialogTitle>Save Profile</DialogTitle>
+      <Dialog 
+        open={showSaveDialog} 
+        onClose={() => setShowSaveDialog(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.secondary,
+            color: theme.primary
+          }
+        }}
+      >
+        <DialogTitle sx={{ color: theme.primary }}>Save Profile</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -952,31 +1189,96 @@ const handleDrugInputChange = (event) => {
             variant="standard"
             value={profileName}
             onChange={(e) => setProfileName(e.target.value)}
+            InputProps={{
+              sx: { 
+                color: theme.primary,
+                '&:before': {
+                  borderBottomColor: theme.primary
+                },
+                '&:after': {
+                  borderBottomColor: theme.accent
+                }
+              }
+            }}
+            InputLabelProps={{
+              sx: { color: theme.primary }
+            }}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowSaveDialog(false)}>Cancel</Button>
-          <Button onClick={handleSaveProfile}>Save</Button>
+          <Button 
+            onClick={() => setShowSaveDialog(false)}
+            sx={{ 
+              color: theme.primary,
+              '&:hover': {
+                backgroundColor: theme.background.light
+              }
+            }}
+          >
+            Cancel
+          </Button>
+          <Button 
+            onClick={handleSaveProfile}
+            sx={{ 
+              color: theme.accent,
+              '&:hover': {
+                backgroundColor: theme.background.light
+              }
+            }}
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
   
       {/* Load Profile Dialog */}
-      <Dialog open={showLoadDialog} onClose={() => setShowLoadDialog(false)}>
-        <DialogTitle>Load Profile</DialogTitle>
+      <Dialog 
+        open={showLoadDialog} 
+        onClose={() => setShowLoadDialog(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.secondary,
+            color: theme.primary
+          }
+        }}
+      >
+        <DialogTitle sx={{ color: theme.primary }}>Load Profile</DialogTitle>
         <DialogContent>
           {savedProfiles.map((profile, index) => (
-            <Button key={index} onClick={() => handleLoadProfile(profile)}>
+            <Button 
+              key={index} 
+              onClick={() => handleLoadProfile(profile)}
+              fullWidth
+              sx={{ 
+                marginBottom: 1,
+                color: theme.primary,
+                backgroundColor: theme.background.light,
+                '&:hover': {
+                  backgroundColor: theme.accent,
+                  color: theme.secondary
+                }
+              }}
+            >
               {profile.name}
             </Button>
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowLoadDialog(false)}>Cancel</Button>
+          <Button 
+            onClick={() => setShowLoadDialog(false)}
+            sx={{ 
+              color: theme.primary,
+              '&:hover': {
+                backgroundColor: theme.background.light
+              }
+            }}
+          >
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </Paper>
   );
-  
 };
 
 export default SymptomChecker;
